@@ -145,3 +145,26 @@
     if (o) o.textContent = OUT[+b.dataset.g];
   });
 })();
+// check-in demo (same bubbles as the app)
+(function () {
+  function init() {
+    var root = document.getElementById("tryit"); if (!root) return;
+    var vals = {}, res = root.querySelector(".tresult");
+    function update() {
+      var n = Object.keys(vals).length;
+      if (n < 3) { res.className = "tresult"; res.innerHTML = '<p class="muted">' + (3 - n) + " to go</p>"; return; }
+      var avg = (vals.focus + vals.energy + vals.mood) / 3;
+      var msg = avg <= 2 ? "Low-energy day. One or two small things is plenty." : avg >= 4 ? "Good day for something big." : "Room for a few normal things.";
+      var c = avg <= 2 ? "var(--men)" : avg >= 4 ? "var(--fol)" : "var(--ovu)";
+      res.className = "tresult done"; res.style.setProperty("--c", c);
+      res.innerHTML = '<p class="label">Naia would say</p><p class="tmsg">' + msg + '</p><button type="button" class="pill treset">Start again</button>';
+    }
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest(".bub");
+      if (b) { var q = b.closest(".tq"); q.querySelectorAll(".bub").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); vals[q.dataset.q] = +b.dataset.v; q.querySelector(".tval").textContent = b.getAttribute("aria-label"); update(); }
+      if (e.target.closest(".treset")) { vals = {}; root.querySelectorAll(".bub").forEach(function (x) { x.setAttribute("aria-pressed", "false"); }); root.querySelectorAll(".tval").forEach(function (x) { x.textContent = ""; }); update(); }
+    });
+    update();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();

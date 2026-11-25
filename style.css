@@ -1104,3 +1104,25 @@ html.still .words span,html.still .hero .lead,html.still .hero .stores,html.stil
 .ftext p,.relout{font-size:1.125rem}
 .ftext h3{margin-bottom:10px}
 @media (min-width:861px){.tldr{flex-wrap:nowrap;gap:8px}.tldr li{white-space:nowrap;font-size:.875rem;padding-right:14px}}
+
+/* ===== V7 · softer, playful ===== */
+.tryit2{max-width:620px;margin:0 auto;text-align:center}
+.tryit2 .tqs{display:grid;gap:26px}
+.tryit2 .tlabel{font-size:1.25rem;font-weight:600;margin-bottom:12px}
+.tryit2 .bubs{justify-content:center;gap:16px;min-height:72px}
+.tryit2 .bub{--z2:calc(var(--z) * 1.35)}
+.tryit2 .bub::before{width:var(--z2);height:var(--z2)}
+.tryit2 .bub{width:var(--z2);height:var(--z2)}
+html.moving .tryit2 .bub::before{animation:bob 3.2s ease-in-out infinite alternate}
+.tryit2 .bub:nth-child(2)::before{animation-delay:-.6s}.tryit2 .bub:nth-child(3)::before{animation-delay:-1.2s}.tryit2 .bub:nth-child(4)::before{animation-delay:-1.8s}.tryit2 .bub:nth-child(5)::before{animation-delay:-2.4s}
+@keyframes bob{to{transform:translateY(-4px)}}
+.tryit2 .tresult{margin-top:30px;min-height:60px}
+.tryit2 .tresult.done{display:inline-block;padding:18px 26px;border-radius:22px;text-align:center}
+.tryit2 .tresult .muted{color:var(--dim)}
+/* less "technical": softer cards, fewer hard borders */
+.relgrid li,.rows.bento div,.phase{border-color:rgba(255,255,255,.06);border-radius:28px}
+.relgrid li{background:linear-gradient(160deg,color-mix(in srgb,var(--c) 12%,transparent),rgba(255,255,255,.02))}
+.tldr li{border-color:transparent;background:rgba(255,255,255,.07)}
+.divebox{border-radius:30px;border-color:rgba(255,255,255,.06)}
+.goals{gap:12px}
+.goal{border-color:transparent;background:rgba(255,255,255,.07)}

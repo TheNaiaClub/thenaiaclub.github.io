@@ -95,6 +95,18 @@
  </div>
 </div></section>
 
+<section class="band" id="try"><div class="wrap">
+ <div class="sechead"><h2>Try a check-in</h2><p class="sub">This is how it feels in the app. Tap a bubble for each. Nothing is saved.</p></div>
+ <div class="tryit2 reveal" id="tryit">
+  <div class="tqs">
+   <div class="tq" data-q="focus"><p class="tlabel">How is your <span class="script">focus</span>? <span class="tval"></span></p><div class="bubs"><button type="button" class="bub" data-v="1" aria-pressed="false" aria-label="Very low" style="--z:25px"></button><button type="button" class="bub" data-v="2" aria-pressed="false" aria-label="Low" style="--z:32px"></button><button type="button" class="bub" data-v="3" aria-pressed="false" aria-label="OK" style="--z:39px"></button><button type="button" class="bub" data-v="4" aria-pressed="false" aria-label="Good" style="--z:46px"></button><button type="button" class="bub" data-v="5" aria-pressed="false" aria-label="Very good" style="--z:53px"></button></div></div>
+   <div class="tq" data-q="energy"><p class="tlabel">How is your <span class="script">energy</span>? <span class="tval"></span></p><div class="bubs"><button type="button" class="bub" data-v="1" aria-pressed="false" aria-label="Very low" style="--z:25px"></button><button type="button" class="bub" data-v="2" aria-pressed="false" aria-label="Low" style="--z:32px"></button><button type="button" class="bub" data-v="3" aria-pressed="false" aria-label="OK" style="--z:39px"></button><button type="button" class="bub" data-v="4" aria-pressed="false" aria-label="Good" style="--z:46px"></button><button type="button" class="bub" data-v="5" aria-pressed="false" aria-label="Very good" style="--z:53px"></button></div></div>
+   <div class="tq" data-q="mood"><p class="tlabel">How is your <span class="script">mood</span>? <span class="tval"></span></p><div class="bubs"><button type="button" class="bub" data-v="1" aria-pressed="false" aria-label="Very low" style="--z:25px"></button><button type="button" class="bub" data-v="2" aria-pressed="false" aria-label="Low" style="--z:32px"></button><button type="button" class="bub" data-v="3" aria-pressed="false" aria-label="OK" style="--z:39px"></button><button type="button" class="bub" data-v="4" aria-pressed="false" aria-label="Good" style="--z:46px"></button><button type="button" class="bub" data-v="5" aria-pressed="false" aria-label="Very good" style="--z:53px"></button></div></div>
+  </div>
+  <div class="tresult" aria-live="polite"></div>
+ </div>
+</div></section>
+
 <section class="band" id="cycle"><div class="wrap">
  <div class="sechead"><h2>Your month, as a dive</h2><p class="sub">Before your period, estrogen drops, and ADHD symptoms often get louder. Tap a day to see.</p></div>
  <figure class="dive reveal" id="dive">
@@ -121,6 +133,17 @@
   <li class="phase reveal" style="--c:var(--lut)"><div class="phtop"><span class="phdot"></span><span class="phname">Luteal</span><span class="phdays">Days 16–28</span></div>
    <p class="phmode">Protect mode</p><span class="ebar" aria-label="Energy 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span><p class="phtip">Finish one open loop instead of starting a new one.</p></li>
  </ul>
+</div></section>
+
+<section class="band"><div class="wrap narrow">
+ <div class="sechead"><h2>What do you want help with?</h2><p class="sub">It’s the first thing Naia asks you. Tap one.</p></div>
+ <div class="goals reveal" role="group" aria-label="What do you want help with?">
+  <button type="button" class="goal" aria-pressed="true" data-g="0" style="--c:var(--fol)">Plan around my focus</button>
+  <button type="button" class="goal" aria-pressed="false" data-g="1" style="--c:var(--men)">Mood before my period</button>
+  <button type="button" class="goal" aria-pressed="false" data-g="2" style="--c:var(--ovu)">How my meds work</button>
+  <button type="button" class="goal" aria-pressed="false" data-g="3" style="--c:var(--lut)">Just tracking</button>
+ </div>
+ <p class="goalout center" aria-live="polite">Naia marks your Good days, so the big stuff lands when you’ve got the most in the tank.</p>
 </div></section>
 
 <section class="band"><div class="wrap">
