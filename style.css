@@ -1086,3 +1086,21 @@ section.band{isolation:isolate}
 .chip.c3{bottom:4%;left:-10%}
 @media (max-width:860px){.chip.c1{top:8%;left:0}.chip.c2{top:40%;right:0}.chip.c3{bottom:6%;left:0}}
 @media (max-width:860px){.chip.c2{top:auto;bottom:22%;right:0}}
+
+/* ===== V6 · ADHD-FIRST ===== */
+/* 3-step TL;DR in the hero */
+.tldr{list-style:none;margin:0 0 30px;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.tldr li{display:inline-flex;align-items:center;gap:10px;max-width:none;padding:8px 16px 8px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:.9375rem;font-weight:600;color:var(--ink)}
+.tldr b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--lut);color:var(--onlav);font-size:.8125rem}
+.tldr li:nth-child(2) b{background:var(--fol);color:#06231A}
+.tldr li:nth-child(3) b{background:var(--ovu);color:#2a1e05}
+.hero.v3 .lead{margin-bottom:22px;font-size:1.25rem}
+@media (max-width:860px){.tldr{justify-content:center}}
+@media (max-width:560px){.tldr{flex-direction:column;align-items:stretch;max-width:300px;margin-left:auto;margin-right:auto}.tldr li{font-size:.9375rem}.hero.v3 .lead{font-size:1.0625rem}}
+/* nothing moves unless the visitor turns it on */
+html.still .chip,html.still .float .phone,html.still .hero .glow,html.still .beams i,html.still .caustic{animation:none!important}
+html.still .words span,html.still .hero .lead,html.still .hero .stores,html.still .hero .soon{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
+/* bigger, calmer reading */
+.ftext p,.relout{font-size:1.125rem}
+.ftext h3{margin-bottom:10px}
+@media (min-width:861px){.tldr{flex-wrap:nowrap;gap:8px}.tldr li{white-space:nowrap;font-size:.875rem;padding-right:14px}}

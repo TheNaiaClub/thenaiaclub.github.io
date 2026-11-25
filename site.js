@@ -8,7 +8,7 @@
 
   function apply() {
     var size = get("size", "normal");
-    var motion = get("motion", (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ? "still" : "moving");
+    var motion = get("motion2", "still");
     root.dataset.size = size;
     root.classList.remove("moving", "still", "nosea");
     root.classList.add(motion === "off" ? "nosea" : motion);
@@ -60,7 +60,7 @@
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-set]");
-    if (b) { set(b.dataset.set, b.dataset.val); apply(); return; }
+    if (b) { set(b.dataset.set === "motion" ? "motion2" : b.dataset.set, b.dataset.val); apply(); return; }
     var mb = e.target.closest("#menuBtn"), mn = document.getElementById("mnav");
     if (mb && mn) { var o = mn.hidden; mn.hidden = !o; mb.setAttribute("aria-expanded", String(o)); root.classList.toggle("menu-open", o); return; }
     if (mn && !mn.hidden && e.target.closest("#mnav a")) { mn.hidden = true; document.getElementById("menuBtn").setAttribute("aria-expanded", "false"); root.classList.remove("menu-open"); }
