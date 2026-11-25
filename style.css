@@ -1003,3 +1003,9 @@ footer.site .wrap.fbottom{display:flex;justify-content:space-between;gap:12px 24
 .beams{-webkit-mask-image:linear-gradient(#000 25%,transparent 78%);mask-image:linear-gradient(#000 25%,transparent 78%)}
 .hero.cine{overflow:visible}
 .hero.cine::before{display:none}
+/* anchor jumps land below the sticky header */
+section[id]{scroll-margin-top:72px}
+/* no text cursor on headings when a link jumps to them */
+.sechead h2,.ftext h3{caret-color:transparent}
+/* feature rows: smaller, better balanced headings */
+@media (min-width:861px){.ftext h3{font-size:clamp(1.5rem,2.2vw,1.9rem)}}
