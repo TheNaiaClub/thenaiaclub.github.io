@@ -89,7 +89,36 @@ document.addEventListener("click", function (e) {
   pops.forEach(function (p) { p.hidden = true; });
   if (same) return;
   pop.dataset.for = b.dataset.store;
-  pop.querySelector(".sp-t").textContent = "Naia isn’t on " + (b.dataset.store === "App Store" ? "the App Store" : "Google Play") + " yet.";
   pop.hidden = false;
   pop.classList.remove("pop-in"); void pop.offsetWidth; pop.classList.add("pop-in");
 });
+// launch list: send the email to info.thenaiaclub@icloud.com through FormSubmit
+document.addEventListener("submit", function (e) {
+  var f = e.target.closest(".wl");
+  if (!f) return;
+  e.preventDefault();
+  var box = f.closest(".storepop"), msg = box.querySelector(".wl-msg"), btn = f.querySelector("button");
+  var email = f.email.value.trim();
+  if (f._honey.value) return;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email doesn’t look right. Can you check it?"; msg.className = "wl-msg err"; f.email.focus(); return; }
+  btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = ""; msg.className = "wl-msg";
+  fetch("https://formsubmit.co/ajax/info.thenaiaclub@icloud.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({ email: email, _subject: "Naia launch list: " + email, _template: "table", _captcha: "false", message: "Please tell me when Naia launches." })
+  }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function () {
+    f.hidden = true; box.querySelector(".sp-s").hidden = true;
+    box.querySelector(".sp-t").textContent = "You’re on the list";
+    msg.textContent = "We’ll email you when Naia is on the App Store."; msg.className = "wl-msg ok";
+  }).catch(function () {
+    btn.disabled = false; btn.textContent = "Notify me";
+    msg.innerHTML = "Couldn’t send that. Please try again, or follow <a href=\"https://instagram.com/thenaiaclub\" target=\"_blank\" rel=\"noopener\">@thenaiaclub</a>."; msg.className = "wl-msg err";
+  });
+});
+// jumping to a section from the menu: show everything at once, no fade-in
+(function () {
+  function jump() { document.documentElement.classList.add("jumped"); document.querySelectorAll(".reveal").forEach(function (e) { e.classList.add("in"); }); }
+  if (location.hash) jump();
+  addEventListener("hashchange", jump);
+  document.addEventListener("click", function (e) { var a = e.target.closest('a[href*="#"]'); if (a) jump(); }, true);
+})();
