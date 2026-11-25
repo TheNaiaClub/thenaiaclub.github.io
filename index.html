@@ -60,6 +60,9 @@
   <ul class="proof"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>7 days free</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No account</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Your data stays on your phone</li></ul>
  </div>
  <div class="shot float"><span class="glow" aria-hidden="true"></span>
+  <span class="chip c1" aria-hidden="true"><i style="--c:var(--fol)"></i>Day 9 · Follicular</span>
+  <span class="chip c2" aria-hidden="true"><b>✓</b>Check-in done</span>
+  <span class="chip c3" aria-hidden="true"><i style="--c:var(--ovu)"></i>Strong day tomorrow</span>
   <img class="phone" src="img/app-plan.webp" width="516" height="1119" alt="Naia app: a Strong day with a big report, an Okay day with emails, and a Hard day with rest and one small task">
  </div>
 </div></section>
@@ -105,21 +108,23 @@
  </figure>
 </div></section>
 
-<section class="band"><div class="wrap narrow">
- <div class="sechead"><h2>What do you want help with?</h2><p class="sub">It’s the first thing Naia asks you. Tap one to see what it does.</p></div>
- <div class="goals reveal" role="group" aria-label="What do you want help with?">
-  <button type="button" class="goal" aria-pressed="true" data-g="0" style="--c:var(--fol)">Plan around my focus</button>
-  <button type="button" class="goal" aria-pressed="false" data-g="1" style="--c:var(--men)">Mood before my period</button>
-  <button type="button" class="goal" aria-pressed="false" data-g="2" style="--c:var(--ovu)">How my meds work</button>
-  <button type="button" class="goal" aria-pressed="false" data-g="3" style="--c:var(--lut)">Just tracking</button>
- </div>
- <p class="goalout center" aria-live="polite">Naia marks your Good days, so the big stuff lands when you’ve got the most in the tank.</p>
- <p class="note center">For women with ADHD, diagnosed or not. Ages 16+.</p>
+<section class="band" id="phases"><div class="wrap">
+ <div class="sechead"><h2>Four phases, four modes</h2><p class="sub">Naia gives every part of your cycle a mode, and a tip for what tends to work then.</p></div>
+ <ul class="phases">
+  <li class="phase reveal" style="--c:var(--men)"><div class="phtop"><span class="phdot"></span><span class="phname">Period</span><span class="phdays">Days 1–5</span></div>
+   <p class="phmode">Reset mode</p><span class="ebar" aria-label="Energy 1 of 5"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><p class="phtip">Pick one must-do today. Everything else is a bonus.</p></li>
+  <li class="phase reveal" style="--c:var(--fol)"><div class="phtop"><span class="phdot"></span><span class="phname">Follicular</span><span class="phdays">Days 6–12</span></div>
+   <p class="phmode">Build mode</p><span class="ebar" aria-label="Energy 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span><p class="phtip">Do the boring admin now: forms, emails, bills.</p></li>
+  <li class="phase reveal" style="--c:var(--ovu)"><div class="phtop"><span class="phdot"></span><span class="phname">Ovulation</span><span class="phdays">Days 13–15</span></div>
+   <p class="phmode">Shine mode</p><span class="ebar" aria-label="Energy 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><p class="phtip">Book the calls and hard conversations for these days.</p></li>
+  <li class="phase reveal" style="--c:var(--lut)"><div class="phtop"><span class="phdot"></span><span class="phname">Luteal</span><span class="phdays">Days 16–28</span></div>
+   <p class="phmode">Protect mode</p><span class="ebar" aria-label="Energy 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span><p class="phtip">Finish one open loop instead of starting a new one.</p></li>
+ </ul>
 </div></section>
 
 <section class="band"><div class="wrap">
  <div class="sechead"><h2>Also in the app</h2></div>
- <dl class="rows reveal">
+ <dl class="rows bento reveal">
   <div style="--c:var(--lut)"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></span><dt>I need a minute</dt><dd>A one-minute breathing break for when it’s all too much.</dd></div>
   <div style="--c:var(--men)"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M10 12h5M10 16h5"/></svg></span><dt>For my doctor</dt><dd>Notes between appointments, turned into one summary for your GP.</dd></div>
   <div style="--c:var(--fol)"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><dt>Insights</dt><dd>Your mood, focus and symptoms, phase by phase.</dd></div>
