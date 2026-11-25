@@ -122,3 +122,24 @@ document.addEventListener("submit", function (e) {
   addEventListener("hashchange", jump);
   document.addEventListener("click", function (e) { var a = e.target.closest('a[href*="#"]'); if (a) jump(); }, true);
 })();
+// smooth FAQ open/close + fade on changing text
+(function () {
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.addEventListener("click", function (e) {
+    var s = e.target.closest("summary"); if (!s || reduce) return;
+    var d = s.parentElement, a = d.querySelector(".a"); if (!a || !a.animate) return;
+    e.preventDefault();
+    if (d.open) {
+      var h = a.offsetHeight;
+      a.animate([{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 260, easing: "cubic-bezier(.4,0,.2,1)" }).onfinish = function () { d.open = false; };
+    } else {
+      d.open = true; var h2 = a.offsetHeight;
+      a.animate([{ height: "0px", opacity: 0 }, { height: h2 + "px", opacity: 1 }], { duration: 300, easing: "cubic-bezier(.2,.8,.2,1)" });
+    }
+  });
+  function fade(el) { if (!el) return; el.classList.remove("fadein"); void el.offsetWidth; el.classList.add("fadein"); }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".goal")) setTimeout(function () { fade(document.querySelector(".goalout")); }, 0);
+    if (e.target.closest(".bub") || e.target.closest(".treset")) setTimeout(function () { var r = document.querySelector("#tryit .tresult.done"); if (r) fade(r); }, 0);
+  });
+})();

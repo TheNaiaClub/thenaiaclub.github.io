@@ -1126,3 +1126,28 @@ html.moving .tryit2 .bub::before{animation:bob 3.2s ease-in-out infinite alterna
 .divebox{border-radius:30px;border-color:rgba(255,255,255,.06)}
 .goals{gap:12px}
 .goal{border-color:transparent;background:rgba(255,255,255,.07)}
+
+/* ===== V8 · smooth interactions ===== */
+html{scroll-behavior:smooth}
+a,button,.pill,.btn,.goal,.store,.bub::before,summary,.rows.bento div,.phase{transition:background-color .25s ease,color .25s ease,border-color .25s ease,box-shadow .3s ease,transform .25s cubic-bezier(.2,.8,.2,1),opacity .25s ease}
+.btn:active,.goal:active,.store:active,.pill:active{transform:scale(.96)}
+.bub:active::before{transform:scale(.9)}
+.bub[aria-pressed="true"]::before{transform:scale(1.08)}
+/* menu + settings sheet slide in */
+.mnav:not([hidden]){animation:slidedown .28s cubic-bezier(.2,.8,.2,1)}
+.panel.sheet:not([hidden]){animation:sheetup .32s cubic-bezier(.2,.8,.2,1)}
+.storepop:not([hidden]){animation:popin .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes slidedown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes sheetup{from{opacity:0;transform:translate(-50%,24px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes popin{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+/* text that changes after a tap fades in */
+.fadein{animation:fadeup .35s ease}
+@keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* FAQ answers */
+details .a{overflow:hidden}
+summary::after{transition:transform .3s cubic-bezier(.2,.8,.2,1),background-color .25s}
+details[open] summary::after{transform:translateY(-50%) rotate(180deg)}
+/* dive tooltip glides */
+.divetip{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+.divechart .ring,.divechart .guide{transition:cx .22s ease,cy .22s ease,x1 .22s ease,x2 .22s ease}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
