@@ -1151,3 +1151,24 @@ details[open] summary::after{transform:translateY(-50%) rotate(180deg)}
 .divetip{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
 .divechart .ring,.divechart .guide{transition:cx .22s ease,cy .22s ease,x1 .22s ease,x2 .22s ease}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ===== V9 · menu as smooth overlay + page transitions ===== */
+header.site{position:sticky}
+.mnav{position:absolute;left:0;right:0;top:100%;border-top:1px solid rgba(255,255,255,.07);background:rgba(9,26,40,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 24px 50px rgba(0,0,0,.45);
+  clip-path:inset(0 0 100% 0);opacity:0;transition:clip-path .38s cubic-bezier(.2,.8,.2,1),opacity .3s ease;animation:none!important}
+.mnav.open{clip-path:inset(0 0 0 0);opacity:1}
+.mnav a,.mnav button{opacity:0;transform:translateY(-6px);transition:opacity .3s ease,transform .3s cubic-bezier(.2,.8,.2,1),color .2s}
+.mnav.open a,.mnav.open button{opacity:1;transform:none}
+.mnav.open a:nth-child(2){transition-delay:.03s}.mnav.open a:nth-child(3){transition-delay:.06s}.mnav.open a:nth-child(4){transition-delay:.09s}.mnav.open a:nth-child(5){transition-delay:.12s}.mnav.open button{transition-delay:.15s}
+html.menu-open main,html.menu-open footer{filter:brightness(.55);transition:filter .3s ease}
+main,footer{transition:filter .3s ease}
+.menubtn svg path{transition:d .3s}
+html.menu-open .menubtn{background:rgba(169,156,235,.18);border-color:rgba(169,156,235,.4)}
+/* pages fade in, and fade out when leaving */
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
+body{animation:pagein .35s ease}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+html.leaving body{opacity:0;transition:opacity .2s ease}
+@media (prefers-reduced-motion:reduce){.mnav,.mnav a{transition:none!important}body{animation:none}}
+.mnav{background:#0b1d2d}

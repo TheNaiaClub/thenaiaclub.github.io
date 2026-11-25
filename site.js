@@ -62,9 +62,9 @@
     var b = e.target.closest("[data-set]");
     if (b) { set(b.dataset.set === "motion" ? "motion3" : b.dataset.set, b.dataset.val); apply(); return; }
     var mb = e.target.closest("#menuBtn"), mn = document.getElementById("mnav");
-    if (mb && mn) { var o = mn.hidden; mn.hidden = !o; mb.setAttribute("aria-expanded", String(o)); root.classList.toggle("menu-open", o); return; }
-    if (mn && !mn.hidden && e.target.closest("#mnav a")) { mn.hidden = true; document.getElementById("menuBtn").setAttribute("aria-expanded", "false"); root.classList.remove("menu-open"); }
-    if (e.target.closest(".opensettings")) { if (mn) { mn.hidden = true; root.classList.remove("menu-open"); } var sp = document.getElementById("settings"); if (sp) { sp.hidden = false; var sb = document.getElementById("settingsBtn"); if (sb) sb.setAttribute("aria-expanded", "true"); } return; }
+    if (mb && mn) { if (mn.hidden || !mn.classList.contains("open")) window.__menu(true); else window.__menu(false); return; }
+    if (mn && !mn.hidden && (e.target.closest("#mnav a") || !e.target.closest("#mnav"))) { window.__menu(false); }
+    if (e.target.closest(".opensettings")) { if (mn) window.__menu(false); var sp = document.getElementById("settings"); if (sp) { sp.hidden = false; var sb = document.getElementById("settingsBtn"); if (sb) sb.setAttribute("aria-expanded", "true"); } return; }
     var t = e.target.closest("#settingsBtn");
     var p = document.getElementById("settings");
     if (t && p) { var open = p.hidden; p.hidden = !open; t.setAttribute("aria-expanded", String(open)); return; }
@@ -143,3 +143,22 @@ document.addEventListener("submit", function (e) {
     if (e.target.closest(".bub") || e.target.closest(".treset")) setTimeout(function () { var r = document.querySelector("#tryit .tresult.done"); if (r) fade(r); }, 0);
   });
 })();
+
+// menu: smooth slide open/close as an overlay
+window.__menu = function (open) {
+  var mn = document.getElementById("mnav"), mb = document.getElementById("menuBtn"), root = document.documentElement;
+  if (!mn) return;
+  clearTimeout(mn._t);
+  if (open) { mn.hidden = false; void mn.offsetWidth; mn.classList.add("open"); root.classList.add("menu-open"); }
+  else { mn.classList.remove("open"); root.classList.remove("menu-open"); mn._t = setTimeout(function () { mn.hidden = true; }, 340); }
+  if (mb) mb.setAttribute("aria-expanded", String(open));
+};
+// soft fade when leaving to another page
+document.addEventListener("click", function (e) {
+  var a = e.target.closest("a[href]"); if (!a || a.target || e.metaKey || e.ctrlKey) return;
+  var u = new URL(a.href, location.href);
+  if (u.origin !== location.origin || (u.pathname === location.pathname && u.hash) || /^mailto:|^tel:/.test(a.getAttribute("href"))) return;
+  if (document.startViewTransition || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+  e.preventDefault(); document.documentElement.classList.add("leaving"); setTimeout(function () { location.href = a.href; }, 220);
+});
+addEventListener("pageshow", function () { document.documentElement.classList.remove("leaving"); });
