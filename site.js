@@ -162,3 +162,38 @@ document.addEventListener("click", function (e) {
   e.preventDefault(); document.documentElement.classList.add("leaving"); setTimeout(function () { location.href = a.href; }, 220);
 });
 addEventListener("pageshow", function () { document.documentElement.classList.remove("leaving"); });
+// ===== smooth travel for every link that goes somewhere on the site =====
+(function () {
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function norm(p) { return p.replace(/index\.html$/, ""); }
+  function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function glide(el) {
+    var head = document.querySelector("header.site"), off = head ? head.offsetHeight + 12 : 0;
+    var from = scrollY, to = Math.max(0, el.getBoundingClientRect().top + scrollY - off), d = to - from;
+    if (reduce || Math.abs(d) < 4) { scrollTo(0, to); return; }
+    var dur = Math.min(1100, 450 + Math.abs(d) * .12), t0 = null;
+    document.documentElement.style.scrollBehavior = "auto";
+    (function step(ts) { if (t0 === null) t0 = ts; var t = Math.min(1, (ts - t0) / dur); scrollTo(0, from + d * ease(t)); if (t < 1) requestAnimationFrame(step); else { document.documentElement.style.scrollBehavior = ""; var fix = el.getBoundingClientRect().top - off; if (Math.abs(fix) > 6 && !el._fixed) { el._fixed = 1; glide(el); setTimeout(function(){ el._fixed = 0; }, 1500); } } })(performance.now());
+    requestAnimationFrame(function s(ts) { });
+  }
+  window.__glide = glide;
+  // same-page links (incl. "index.html#…" while already on the home page)
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a[href]"); if (!a || e.defaultPrevented && !a.closest("#mnav")) {}
+    if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var u = new URL(a.href, location.href);
+    if (u.origin !== location.origin || norm(u.pathname) !== norm(location.pathname) || !u.hash) return;
+    var el = document.getElementById(decodeURIComponent(u.hash.slice(1))); if (!el) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if (window.__menu) window.__menu(false);
+    history.pushState(null, "", u.hash);
+    document.querySelectorAll(".reveal").forEach(function (r) { r.classList.add("in"); });
+    setTimeout(function () { glide(el); }, a.closest("#mnav") ? 180 : 0);
+  }, true);
+  // arriving from another page with #section: fade in at the top, then glide down
+  if (location.hash && document.getElementById(location.hash.slice(1))) {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    scrollTo(0, 0);
+    addEventListener("load", function () { document.querySelectorAll(".reveal").forEach(function (r) { r.classList.add("in"); }); document.querySelectorAll("img[loading=lazy]").forEach(function (i) { i.loading = "eager"; }); setTimeout(function () { var el = document.getElementById(location.hash.slice(1)); if (el) glide(el); }, 350); });
+  }
+})();
