@@ -113,7 +113,7 @@ document.addEventListener("submit", function (e) {
     }
     f.hidden = true; box.querySelector(".sp-s").hidden = true;
     box.querySelector(".sp-t").textContent = "You’re on the list";
-    msg.textContent = "Check your inbox for a little hello from us."; msg.className = "wl-msg ok";
+    msg.textContent = "Check your inbox for a little hello from us. Not there? Peek in Promotions or Spam and move it to your inbox, so you don't miss launch day."; msg.className = "wl-msg ok";
   }
   // MailerLite: adds the email to the "Launch list" group; MailerLite then sends the welcome email.
   var ML = "https://assets.mailerlite.com/jsonp/2826894/forms/205211427578840594/subscribe";
