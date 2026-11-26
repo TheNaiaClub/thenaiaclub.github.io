@@ -92,7 +92,8 @@ document.addEventListener("click", function (e) {
   pop.hidden = false;
   pop.classList.remove("pop-in"); void pop.offsetWidth; pop.classList.add("pop-in");
 });
-// launch list: send the email to info.thenaiaclub@icloud.com through FormSubmit
+// launch list: send the email to info.thenaiaclub@icloud.com through FormSubmit.
+// Uses a normal form post into a hidden frame (no background request that can hang).
 document.addEventListener("submit", function (e) {
   var f = e.target.closest(".wl");
   if (!f) return;
@@ -102,18 +103,26 @@ document.addEventListener("submit", function (e) {
   if (f._honey.value) return;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email doesn’t look right. Can you check it?"; msg.className = "wl-msg err"; f.email.focus(); return; }
   btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = ""; msg.className = "wl-msg";
-  fetch("https://formsubmit.co/ajax/info.thenaiaclub@icloud.com", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Accept": "application/json" },
-    body: JSON.stringify({ email: email, _subject: "Naia launch list: " + email, _template: "table", _captcha: "false", message: "Please tell me when Naia launches." })
-  }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function () {
+  var name = "wlframe" + Date.now(), fr = document.createElement("iframe");
+  fr.name = name; fr.title = "Launch list"; fr.style.cssText = "position:absolute;width:0;height:0;border:0;visibility:hidden";
+  document.body.appendChild(fr);
+  var post = document.createElement("form");
+  post.method = "POST"; post.action = "https://formsubmit.co/info.thenaiaclub@icloud.com"; post.target = name; post.style.display = "none";
+  [["email", email], ["_subject", "Naia launch list: " + email], ["_template", "table"], ["_captcha", "false"], ["message", "Please tell me when Naia launches."]].forEach(function (kv) {
+    var i = document.createElement("input"); i.type = "hidden"; i.name = kv[0]; i.value = kv[1]; post.appendChild(i);
+  });
+  document.body.appendChild(post);
+  var done = false;
+  function finish() {
+    if (done) return; done = true;
     f.hidden = true; box.querySelector(".sp-s").hidden = true;
     box.querySelector(".sp-t").textContent = "You’re on the list";
     msg.textContent = "We’ll email you when Naia is on the App Store."; msg.className = "wl-msg ok";
-  }).catch(function () {
-    btn.disabled = false; btn.textContent = "Notify me";
-    msg.innerHTML = "Couldn’t send that. Please try again, or follow <a href=\"https://instagram.com/thenaiaclub\" target=\"_blank\" rel=\"noopener\">@thenaiaclub</a>."; msg.className = "wl-msg err";
-  });
+    setTimeout(function () { post.remove(); fr.remove(); }, 15000);
+  }
+  fr.addEventListener("load", finish);
+  setTimeout(finish, 3500);
+  post.submit();
 });
 // jumping to a section from the menu: show everything at once, no fade-in
 (function () {
