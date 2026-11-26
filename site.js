@@ -108,7 +108,8 @@ document.addEventListener("submit", function (e) {
   document.body.appendChild(fr);
   var post = document.createElement("form");
   post.method = "POST"; post.action = "https://formsubmit.co/info.thenaiaclub@icloud.com"; post.target = name; post.style.display = "none";
-  [["email", email], ["_subject", "Naia launch list: " + email], ["_template", "table"], ["_captcha", "false"], ["message", "Please tell me when Naia launches."]].forEach(function (kv) {
+  [["email", email], ["_subject", "Naia launch list: " + email], ["_template", "table"], ["_captcha", "false"], ["message", "Please tell me when Naia launches."], ["_replyto", email],
+   ["_autoresponse", "Hi, thanks for signing up! You're on the Naia list. We'll send you one email when the app is on the App Store, and that's it. Have a gentle week. Daryna, The Naia Club"]].forEach(function (kv) {
     var i = document.createElement("input"); i.type = "hidden"; i.name = kv[0]; i.value = kv[1]; post.appendChild(i);
   });
   document.body.appendChild(post);
