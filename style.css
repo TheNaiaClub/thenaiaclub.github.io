@@ -1172,3 +1172,4 @@ body{animation:pagein .35s ease}
 html.leaving body{opacity:0;transition:opacity .2s ease}
 @media (prefers-reduced-motion:reduce){.mnav,.mnav a{transition:none!important}body{animation:none}}
 .mnav{background:#0b1d2d}
+.wl[hidden],.sp-s[hidden],.storepop [hidden]{display:none!important}
