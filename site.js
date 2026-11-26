@@ -103,27 +103,19 @@ document.addEventListener("submit", function (e) {
   if (f._honey.value) return;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email doesn’t look right. Can you check it?"; msg.className = "wl-msg err"; f.email.focus(); return; }
   btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = ""; msg.className = "wl-msg";
-  var name = "wlframe" + Date.now(), fr = document.createElement("iframe");
-  fr.name = name; fr.title = "Launch list"; fr.style.cssText = "position:absolute;width:0;height:0;border:0;visibility:hidden";
-  document.body.appendChild(fr);
-  var post = document.createElement("form");
-  post.method = "POST"; post.action = "https://formsubmit.co/info.thenaiaclub@icloud.com"; post.target = name; post.style.display = "none";
+  var fd = new FormData();
   [["email", email], ["_subject", "Naia launch list: " + email], ["_template", "table"], ["_captcha", "false"], ["message", "Please tell me when Naia launches."], ["_replyto", email],
-   ["_autoresponse", "Hi, thanks for signing up! You're on the Naia list. We'll send you one email when the app is on the App Store, and that's it. Have a gentle week. Daryna, The Naia Club"]].forEach(function (kv) {
-    var i = document.createElement("input"); i.type = "hidden"; i.name = kv[0]; i.value = kv[1]; post.appendChild(i);
-  });
-  document.body.appendChild(post);
+   ["_autoresponse", "Hi, thanks for signing up! You're on the Naia list. We'll send you one email when the app is on the App Store, and that's it. Have a gentle week. Daryna, The Naia Club"]].forEach(function (kv) { fd.append(kv[0], kv[1]); });
   var done = false;
   function finish() {
     if (done) return; done = true;
     f.hidden = true; box.querySelector(".sp-s").hidden = true;
     box.querySelector(".sp-t").textContent = "You’re on the list";
     msg.textContent = "We’ll email you when Naia is on the App Store."; msg.className = "wl-msg ok";
-    setTimeout(function () { post.remove(); fr.remove(); }, 15000);
   }
-  fr.addEventListener("load", finish);
-  setTimeout(finish, 3500);
-  post.submit();
+  // quiet background send: no page reload, no hidden frame, no browser loading spinner
+  try { fetch("https://formsubmit.co/info.thenaiaclub@icloud.com", { method: "POST", mode: "no-cors", body: fd, keepalive: true }).then(finish, finish); } catch (x) {}
+  setTimeout(finish, 1200);
 });
 // jumping to a section from the menu: show everything at once, no fade-in
 (function () {
