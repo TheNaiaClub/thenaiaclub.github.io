@@ -102,6 +102,13 @@ document.addEventListener("submit", function (e) {
   var email = f.email.value.trim();
   if (f._honey.value) return;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email doesn’t look right. Can you check it?"; msg.className = "wl-msg err"; f.email.focus(); return; }
+  var parts = email.toLowerCase().split("@"), dom = parts[1] || "";
+  var typos = {"gmail.con":"gmail.com","gmail.co":"gmail.com","gmail.cm":"gmail.com","gmail.om":"gmail.com","gmial.com":"gmail.com","gmai.com":"gmail.com","gmal.com":"gmail.com","gamil.com":"gmail.com","gnail.com":"gmail.com","gmail.comm":"gmail.com","gmail.c":"gmail.com","hotmail.con":"hotmail.com","hotmial.com":"hotmail.com","hotmail.co":"hotmail.com","outlook.con":"outlook.com","outlok.com":"outlook.com","yahoo.con":"yahoo.com","yaho.com":"yahoo.com","yahoo.co":"yahoo.com","icloud.con":"icloud.com","iclod.com":"icloud.com","icoud.com":"icloud.com","icloud.co":"icloud.com","live.con":"live.com","me.con":"me.com"};
+  if (typos[dom] && f.dataset.fixed !== email) {
+    var fixed = parts[0] + "@" + typos[dom];
+    f.email.value = fixed; f.dataset.fixed = fixed;
+    msg.textContent = "Did you mean " + fixed + "? We fixed it. Tap Notify me again."; msg.className = "wl-msg err"; f.email.focus(); return;
+  }
   btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = ""; msg.className = "wl-msg";
   var done = false;
   function finish(ok) {
