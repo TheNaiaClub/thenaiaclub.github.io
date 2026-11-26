@@ -103,19 +103,29 @@ document.addEventListener("submit", function (e) {
   if (f._honey.value) return;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email doesn’t look right. Can you check it?"; msg.className = "wl-msg err"; f.email.focus(); return; }
   btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = ""; msg.className = "wl-msg";
-  var fd = new FormData();
-  [["email", email], ["_subject", "Naia launch list: " + email], ["_template", "table"], ["_captcha", "false"], ["message", "Please tell me when Naia launches."], ["_replyto", email],
-   ["_autoresponse", "Hi, thanks for signing up! You're on the Naia list. We'll send you one email when the app is on the App Store, and that's it. Have a gentle week. Daryna, The Naia Club"]].forEach(function (kv) { fd.append(kv[0], kv[1]); });
   var done = false;
-  function finish() {
+  function finish(ok) {
     if (done) return; done = true;
+    if (ok === false) {
+      btn.disabled = false; btn.textContent = "Notify me";
+      msg.innerHTML = "Couldn’t sign you up just now. Please try again, or follow <a href=\"https://instagram.com/thenaiaclub\" target=\"_blank\" rel=\"noopener\">@thenaiaclub</a>.";
+      msg.className = "wl-msg err"; done = false; return;
+    }
     f.hidden = true; box.querySelector(".sp-s").hidden = true;
     box.querySelector(".sp-t").textContent = "You’re on the list";
-    msg.textContent = "We’ll email you when Naia is on the App Store."; msg.className = "wl-msg ok";
+    msg.textContent = "Check your inbox for a little hello from us."; msg.className = "wl-msg ok";
   }
-  // quiet background send: no page reload, no hidden frame, no browser loading spinner
-  try { fetch("https://formsubmit.co/info.thenaiaclub@icloud.com", { method: "POST", mode: "no-cors", body: fd, keepalive: true }).then(finish, finish); } catch (x) {}
-  setTimeout(finish, 1200);
+  // MailerLite: adds the email to the "Launch list" group; MailerLite then sends the welcome email.
+  var ML = "https://assets.mailerlite.com/jsonp/2826894/forms/205211427578840594/subscribe";
+  var body = new URLSearchParams(); body.append("fields[email]", email); body.append("ml-submit", "1"); body.append("anticsrf", "true");
+  fetch(ML, { method: "POST", body: body, headers: { "Accept": "application/json" } })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { finish(!(j && j.success === false)); })
+    .catch(function () {
+      // the browser blocked reading the answer: send again without reading it
+      try { fetch(ML, { method: "POST", mode: "no-cors", body: body, keepalive: true }).then(function () { finish(true); }, function () { finish(false); }); } catch (x) { finish(false); }
+    });
+  setTimeout(function () { if (!done) finish(true); }, 6000);
 });
 // jumping to a section from the menu: show everything at once, no fade-in
 (function () {
